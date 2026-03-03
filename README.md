@@ -10,7 +10,7 @@
 - [x] [Redis란? / Redis의 장점](docs/01-introduction/01-what-is-redis.md)
 - [x] [Redis 주요 사용 사례](docs/01-introduction/02-redis-use-cases.md)
 - [ ] Redis가 채용 공고에 단골로 등장하는 이유 (대용량 트래픽)
-- [ ] 로컬 환경(Windows/MacOS) Redis 설치 가이드
+- [x] [로컬 환경(Windows/MacOS) Redis 설치 가이드](docs/01-introduction/03-install-redis.md)
 
 ### 2️⃣ Redis 실무 활용 능력 키우기
 - [ ] Redis 기본 명령어 정복
