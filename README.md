@@ -15,6 +15,7 @@
 ### 2️⃣ Redis 실무 활용 능력 키우기
 - [x] [Redis 기본 명령어 정복](docs/01-introduction/04-basic-commands.md)
 - [x] [실무에서 통하는 Key 네이밍 컨벤션](docs/02-best-practices/01-key-naming-conventions.md)
+- [x] [캐시(Cache), 캐싱(Caching)이란?](docs/01-introduction/05-what-is-caching.md)
 - [ ] 캐싱(Caching) 전략 완벽 이해 (Cache Aside, Write Around)
 - [ ] 캐싱 적용 전 반드시 체크해야 할 필수 사항
 
