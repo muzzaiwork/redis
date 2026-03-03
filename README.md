@@ -16,7 +16,7 @@
 - [x] [Redis 기본 명령어 정복](docs/01-introduction/04-basic-commands.md)
 - [x] [실무에서 통하는 Key 네이밍 컨벤션](docs/02-best-practices/01-key-naming-conventions.md)
 - [x] [캐시(Cache), 캐싱(Caching)이란?](docs/01-introduction/05-what-is-caching.md)
-- [ ] 캐싱(Caching) 전략 완벽 이해 (Cache Aside, Write Around)
+- [x] [캐싱(Caching) 전략 완벽 이해 (Cache Aside, Write Around)](docs/01-introduction/06-caching-strategies.md)
 - [ ] 캐싱 적용 전 반드시 체크해야 할 필수 사항
 
 ### 3️⃣ 백엔드 프레임워크와 Redis 연동
