@@ -13,7 +13,7 @@
 - [x] [로컬 환경(Windows/MacOS) Redis 설치 가이드](docs/01-introduction/03-install-redis.md)
 
 ### 2️⃣ Redis 실무 활용 능력 키우기
-- [ ] Redis 기본 명령어 정복
+- [x] [Redis 기본 명령어 정복](docs/01-introduction/04-basic-commands.md)
 - [x] [실무에서 통하는 Key 네이밍 컨벤션](docs/02-best-practices/01-key-naming-conventions.md)
 - [ ] 캐싱(Caching) 전략 완벽 이해 (Cache Aside, Write Around)
 - [ ] 캐싱 적용 전 반드시 체크해야 할 필수 사항
