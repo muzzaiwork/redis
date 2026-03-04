@@ -151,7 +151,40 @@ sequenceDiagram
    - 데이터 있음? -> **[Yes]** -> Redis 데이터 반환 -> **[종료]**
    - 데이터 없음? -> **[No]** -> **[DB 조회]** -> **[Redis에 저장]** -> 데이터 반환 -> **[종료]**
 
-#### 6. Docker를 통한 Redis 실행 설정
+#### 6. Redis-cli를 통한 상태 확인 및 도식화
+
+사용자는 `redis-cli`를 통해 Redis의 현재 상태(캐시 존재 여부, TTL 등)를 직접 확인할 수 있습니다.
+
+**상태 확인 도식 (State Diagram with redis-cli):**
+
+```mermaid
+stateDiagram-v2
+    [*] --> Empty: Redis 초기 상태
+    
+    state "Empty (데이터 없음)" as Empty {
+        direction lr
+        CLI_1: redis-cli> keys *
+        Result_1: (empty array)
+    }
+    
+    Empty --> Cached: API 호출 (Cache Miss)
+    
+    state "Cached (데이터 존재)" as Cached {
+        direction vertical
+        CLI_2: redis-cli> keys *
+        Result_2: "getBoards::boards:page:1:size:10"
+        
+        CLI_3: redis-cli> get [Key]
+        Result_3: JSON 데이터 (Board 목록)
+        
+        CLI_4: redis-cli> ttl [Key]
+        Result_4: 남은 시간 (초)
+    }
+    
+    Cached --> Empty: TTL 만료 / DEL 실행
+```
+
+#### 7. Docker를 통한 Redis 실행 설정
 
 **docker-compose.yml**
 
@@ -176,7 +209,7 @@ services:
     restart: always
 ```
 
-#### 7. 테스트 및 확인
+#### 8. 테스트 및 확인
 
 1. **로그 확인**: 캐시가 없을 때 DB 조회가 발생하고, 이후 동일 요청 시 캐시에서 데이터를 가져오는지 로그(`org.springframework.cache: trace`)를 통해 확인합니다.
 2. **Redis-cli 확인**:
