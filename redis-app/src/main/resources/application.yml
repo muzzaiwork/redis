@@ -1,4 +1,4 @@
-# local 환경
+# local 환경 (기본값)
 spring:
   profiles:
     default: local
@@ -32,6 +32,10 @@ spring:
     username: admin
     password: ${DB_PASSWORD} # 실행 시 환경 변수로 주입 권장 (-DDB_PASSWORD=...)
     driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none # 운영 환경에서는 none 또는 validate 권장
+    show-sql: false
   data:
     redis:
       host: localhost
