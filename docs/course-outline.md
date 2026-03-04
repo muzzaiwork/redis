@@ -22,7 +22,7 @@
 - [캐싱으로 조회 성능 개선을 하기 전 OOO을 항상 먼저해야 한다!](https://www.notion.so/OOO-dfa4eef45c75433b962e8d397ab6cc10?pvs=21)
 
 ### ✅ 섹션 5 - 로컬 환경에서 Spring Boot + Redis로 구현하기
-- [기본적인 Spring Boot 프로젝트 셋팅하기](https://www.notion.so/Spring-Boot-5d331d5c48844a798f4f9e35e345b8a4?pvs=21)
+- [기본적인 Spring Boot 프로젝트 셋팅하기](02-spring-boot-redis/01-setting-up-project.md)
 - [Spring Boot 프로젝트에 Redis 셋팅 추가하기](https://www.notion.so/Spring-Boot-Redis-876070e6f4654e2593952ca96f71ba35?pvs=21)
 - [Redis를 적용하기 전후 성능 비교해보기 (Postman)](https://www.notion.so/Redis-Postman-e1b0b8163ef544b3b16852a20af76469?pvs=21)
 
