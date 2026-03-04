@@ -21,10 +21,21 @@
     - `MySQL Driver`
     - `Lombok` (편의를 위해 추가 권장)
 
-#### 2. 불필요한 테스트 코드 삭제
+#### 2. 프로젝트 구조 및 실행 위치 확인
+프로젝트 생성이 완료되면 아래와 같은 구조를 가지게 된다. 모든 명령어(예: `./gradlew bootRun`)는 **`sample-app/redis` 디렉토리 내부**에서 실행해야 한다.
+
+```text
+sample-app/
+└── redis/          <-- 여기서 명령어 실행
+    ├── build.gradle
+    ├── settings.gradle
+    └── src/
+```
+
+#### 3. 불필요한 테스트 코드 삭제
 학습에 집중하기 위해 프로젝트 생성 시 기본으로 포함된 테스트 코드는 삭제하거나 주석 처리한다.
 
-#### 3. application.yml 설정
+#### 4. application.yml 설정
 `src/main/resources/application.properties` 파일을 지우고 `application.yml` 파일을 생성하여 DB 연결 정보를 작성한다.
 
 **application.yml**
@@ -44,7 +55,31 @@ spring:
     show-sql: true
 ```
 
-#### 4. Board 엔티티 만들기
+#### 5. Docker를 사용하여 MySQL 실행하기
+프로젝트 루트에 `docker-compose.yml` 파일을 생성하고 아래 명령어로 데이터베이스를 실행한다.
+
+**docker-compose.yml**
+```yaml
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-container
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: mydb
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+    restart: always
+```
+
+**실행 명령어 (프로젝트 루트에서 실행)**
+```bash
+docker-compose up -d
+```
+
+#### 6. Board 엔티티 만들기
 데이터를 담을 간단한 게시판(`Board`) 엔티티를 작성한다.
 
 **Board.java**
@@ -71,7 +106,7 @@ public class Board {
 }
 ```
 
-#### 5. Controller, Service, Repository 구성
+#### 7. Controller, Service, Repository 구성
 기본적인 조회 기능을 위한 레이어별 코드를 작성한다.
 
 **BoardRepository.java**

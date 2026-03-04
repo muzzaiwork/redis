@@ -43,7 +43,7 @@
 - [Redis를 적용하기 전·후 Throughput(처리량) 비교해보기](https://www.notion.so/Redis-Throughput-c5e5b3f449e94e18865b30802e0b8296?pvs=21)
 
 ### ✅ 섹션 9 - Docker Compose로 Redis + Spring Boot 띄우기
-- [Docker Compose로 Redis, Spring Boot 한 번에 띄울 수 있게 구성하기](https://www.notion.so/Docker-Compose-Redis-Spring-Boot-a6e2a01a7bb345328b44027167cc75df?pvs=21)
+- [Docker Compose로 Redis, Spring Boot 한 번에 띄울 수 있게 구성하기](09-docker-compose/01-docker-compose-setup.md)
 - [AWS EC2에서 Docker Compose를 활용해 Redis, Spring Boot 띄워보기](https://www.notion.so/AWS-EC2-Docker-Compose-Redis-Spring-Boot-1499ca9853f14e639b972ef8384f425e?pvs=21)
 
 ### ✅ 섹션 10 - AWS ElasticCache 활용하기
