@@ -88,9 +88,12 @@ spring:
     activate:
       on-profile: prod
   datasource:
-    url: jdbc:mysql://{rds 엔드포인트}:3306/mydb
-    username: {rds 계정명}
-    password: {rds 비밀번호}
+    # SSL 설정을 위해 verifyServerCertificate=true 및 trustCertificateKeyStoreUrl 등을 설정할 수 있습니다.
+    # 사용자가 제공한 mysql CLI 정보를 기반으로 한 설정 예시입니다.
+    url: jdbc:mysql://instagram-db.czu462om0ew0.ap-northeast-2.rds.amazonaws.com:3306/mydb?useSSL=true&verifyServerCertificate=true&trustCertificateKeyStoreUrl=file:/certs/global-bundle.pem&sslMode=VERIFY_IDENTITY
+    username: admin
+    password: ${DB_PASSWORD} # 보안을 위해 환경 변수 사용 권장
+    driver-class-name: com.mysql.cj.jdbc.Driver
   data:
     redis:
       host: localhost # EC2 내부에 설치된 Redis 사용 시
