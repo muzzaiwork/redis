@@ -7,15 +7,19 @@
 - MySQL 8.x 버전
 - JDK 17
 
-#### 1. Spring Boot 프로젝트 셋팅
+1. Spring Boot 프로젝트 셋팅
 [start.spring.io](https://start.spring.io/)에서 아래와 같이 설정하고 프로젝트를 생성한다.
 
+- **Project**: Gradle - Groovy (또는 Gradle - Kotlin)
+- **Language**: Java
+- **Spring Boot**: 3.2.x (또는 최신 안정 버전)
 - **Java**: 17
 - **Dependencies**:
     - `Spring Boot DevTools`
     - `Spring Web`
     - `Spring Data JPA`
     - `MySQL Driver`
+    - `Lombok` (편의를 위해 추가 권장)
 
 #### 2. 불필요한 테스트 코드 삭제
 학습에 집중하기 위해 프로젝트 생성 시 기본으로 포함된 테스트 코드는 삭제하거나 주석 처리한다.
