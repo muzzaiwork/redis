@@ -50,18 +50,6 @@ $ java -version
 - **보안 그룹 (Security Group)**:
   - **3306번 포트**: EC2 인스턴스의 보안 그룹 또는 IP로부터의 접속을 허용하도록 인바운드 규칙을 설정합니다.
 
-#### 3. RDS SSL 인증서 설치 (보안 연결용)
-AWS RDS와의 보안 연결(SSL)을 위해 Global Bundle 인증서를 다운로드하여 지정된 경로에 배치해야 합니다.
-
-```bash
-# 1. 인증서를 저장할 폴더 생성
-$ sudo mkdir -p /certs
-$ sudo chown $USER:$USER /certs
-
-# 2. AWS Global Bundle 인증서 다운로드
-$ curl -o /certs/global-bundle.pem https://truststore.pki.rds.amazonaws.com/global/global-bundle.pem
-```
-
 ---
 
 ### ✅ Spring Boot 프로젝트 설정 및 배포
@@ -100,8 +88,8 @@ spring:
     activate:
       on-profile: prod
   datasource:
-    # 제공된 RDS 엔드포인트 및 SSL 설정을 기반으로 한 구성
-    url: jdbc:mysql://instagram-db.czu462om0ew0.ap-northeast-2.rds.amazonaws.com:3306/mydb?useSSL=true&verifyServerCertificate=true&trustCertificateKeyStoreUrl=file:/certs/global-bundle.pem&sslMode=VERIFY_IDENTITY
+    # 제공된 RDS 엔드포인트를 기반으로 한 구성
+    url: jdbc:mysql://instagram-db.czu462om0ew0.ap-northeast-2.rds.amazonaws.com:3306/mydb
     username: admin
     password: ${DB_PASSWORD} # 실행 시 환경 변수로 주입 권장 (-DDB_PASSWORD=...)
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -132,8 +120,6 @@ $ ./gradlew clean build -x test
 $ cd build/libs
 $ java -jar -Dspring.profiles.active=prod -DDB_PASSWORD={실제_비밀번호} {빌드된 jar 파일명}.jar
 ```
-
-> **주의**: `/certs/global-bundle.pem` 파일이 존재하지 않으면 `FileNotFoundException`이 발생하며 서버 실행에 실패합니다. 반드시 위의 **RDS SSL 인증서 설치** 단계를 먼저 진행해 주세요.
 
 ---
 
