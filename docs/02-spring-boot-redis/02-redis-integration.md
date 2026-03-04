@@ -121,28 +121,42 @@ public class BoardService {
 4.  **캐시 갱신 (Cache Write)**:
     *   DB에서 조회된 결과 데이터를 **Redis에 저장**하고(설정된 1분 TTL 적용), 사용자에게 반환합니다.
 
-**작동 흐름 도식 (Sequence Diagram):**
+**작동 흐름 및 상태 확인 도식 (Sequence Diagram):**
 
 ```mermaid
 sequenceDiagram
+    participant CLI as redis-cli
     participant Client as 사용자/컨트롤러
     participant Spring as Spring (AOP/Cache)
     participant Redis as Redis (Cache)
     participant DB as MySQL (Database)
 
+    Note over CLI, Redis: [초기 상태] 데이터 없음
+    CLI->>Redis: keys *
+    Redis-->>CLI: (empty array)
+
+    Note over Client, DB: [첫 번째 호출] Cache Miss 발생
     Client->>Spring: getBoards(page, size) 호출
     Spring->>Redis: 데이터 존재 확인 (Key: boards:page:X...)
-    
-    alt 캐시 존재 (Cache Hit)
-        Redis-->>Spring: 캐시 데이터 반환
-        Spring-->>Client: 데이터 응답 (성공)
-    else 캐시 없음 (Cache Miss)
-        Redis-->>Spring: 데이터 없음 (null)
-        Spring->>DB: findAllByOrderByCreatedAtDesc(pageable) 실행
-        DB-->>Spring: DB 데이터 조회 결과 반환
-        Spring->>Redis: 조회 결과 저장 (TTL 1분)
-        Spring-->>Client: 데이터 응답 (성공)
-    end
+    Redis-->>Spring: 데이터 없음 (null)
+    Spring->>DB: findAllByOrderByCreatedAtDesc(pageable) 실행
+    DB-->>Spring: DB 데이터 조회 결과 반환
+    Spring->>Redis: 조회 결과 저장 (TTL 1분)
+    Spring-->>Client: 데이터 응답 (성공)
+
+    Note over CLI, Redis: [호출 후] 데이터 캐싱됨
+    CLI->>Redis: keys *
+    Redis-->>CLI: "getBoards::boards:page:1:size:10"
+    CLI->>Redis: get [Key]
+    Redis-->>CLI: JSON 데이터 (Board 목록)
+    CLI->>Redis: ttl [Key]
+    Redis-->>CLI: 남은 시간 (ex: 59s)
+
+    Note over Client, Redis: [두 번째 호출] Cache Hit 발생
+    Client->>Spring: getBoards(page, size) 호출
+    Spring->>Redis: 데이터 존재 확인 (Key: boards:page:X...)
+    Redis-->>Spring: 캐시 데이터 반환
+    Spring-->>Client: 데이터 응답 (성공)
 ```
 
 **요약 흐름도 (Flowchart):**
@@ -151,40 +165,7 @@ sequenceDiagram
    - 데이터 있음? -> **[Yes]** -> Redis 데이터 반환 -> **[종료]**
    - 데이터 없음? -> **[No]** -> **[DB 조회]** -> **[Redis에 저장]** -> 데이터 반환 -> **[종료]**
 
-#### 6. Redis-cli를 통한 상태 확인 및 도식화
-
-사용자는 `redis-cli`를 통해 Redis의 현재 상태(캐시 존재 여부, TTL 등)를 직접 확인할 수 있습니다.
-
-**상태 확인 도식 (State Diagram with redis-cli):**
-
-```mermaid
-stateDiagram-v2
-    [*] --> Empty: Redis 초기 상태
-    
-    state "Empty (데이터 없음)" as Empty {
-        direction lr
-        CLI_1: redis-cli> keys *
-        Result_1: (empty array)
-    }
-    
-    Empty --> Cached: API 호출 (Cache Miss)
-    
-    state "Cached (데이터 존재)" as Cached {
-        direction vertical
-        CLI_2: redis-cli> keys *
-        Result_2: "getBoards::boards:page:1:size:10"
-        
-        CLI_3: redis-cli> get [Key]
-        Result_3: JSON 데이터 (Board 목록)
-        
-        CLI_4: redis-cli> ttl [Key]
-        Result_4: 남은 시간 (초)
-    }
-    
-    Cached --> Empty: TTL 만료 / DEL 실행
-```
-
-#### 7. Docker를 통한 Redis 실행 설정
+#### 6. Docker를 통한 Redis 실행 설정
 
 **docker-compose.yml**
 
@@ -209,7 +190,7 @@ services:
     restart: always
 ```
 
-#### 8. 테스트 및 확인
+#### 7. 테스트 및 확인
 
 1. **로그 확인**: 캐시가 없을 때 DB 조회가 발생하고, 이후 동일 요청 시 캐시에서 데이터를 가져오는지 로그(`org.springframework.cache: trace`)를 통해 확인합니다.
 2. **Redis-cli 확인**:
