@@ -34,7 +34,7 @@
 ### ✅ 섹션 7 - AWS EC2에서 Redis 활용하기
 - [대략적으로 AWS 비용 얼마나 나오는 지](https://www.notion.so/AWS-99e2ec3cdc78479d85f3d5a57971b2aa?pvs=21)
 - [EC2, RDS, Spring Boot, Redis를 활용한 아키텍처 구성](03-aws/01-aws-architecture.md)
-- [EC2, RDS, Spring Boot, Redis 셋팅](https://www.notion.so/EC2-RDS-Spring-Boot-Redis-0f865f7c703e43e39a268d8efa81f1e8?pvs=21)
+- [EC2, RDS, Spring Boot, Redis 셋팅](03-aws/02-ec2-rds-setup.md)
 - [Redis를 적용하기 전후 성능 비교해보기 (Postman)](https://www.notion.so/Redis-Postman-cd4abc99164b4ce68fb56340d7360f9d?pvs=21)
 
 ### ✅ 섹션 8 - 부하 테스트를 통해 Redis 적용 전후 성능 비교하기
