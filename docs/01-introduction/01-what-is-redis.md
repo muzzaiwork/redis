@@ -25,7 +25,7 @@ Redis는 단순히 속도만 빠른 것이 아니라, 다음과 같은 특징을
 
 ```mermaid
 graph LR
-    subgraph "Redis (Memory)"
+    subgraph Redis_Memory [Redis Memory]
         K1[Key: user:1:name] --> V1[Value: "jaeseong"]
         K2[Key: user:1:age] --> V2[Value: 30]
         K3[Key: user:1:hobby] --> V3[Value: "soccer"]
