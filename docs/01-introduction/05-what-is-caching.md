@@ -4,13 +4,33 @@
 
 **캐시(Cache)**란, **원본 저장소보다 빠르게 가져올 수 있는 임시 데이터 저장소**를 의미한다.
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/e35a8144-c5ff-40f0-b123-384a331e35bb/17b9fb3a-3953-4642-9f8a-5b40d7ef78cf/Untitled.png)
+```mermaid
+graph LR
+    App[Application] -- 1. 요청 --> Cache[Cache: 임시 저장소]
+    Cache -- 2. 데이터 반환 --> App
+    App -- 3. (없을 시) 조회 요청 --> DB[(Database: 원본 저장소)]
+    DB -- 4. 데이터 반환 --> App
+```
 
 참고로 캐시(Cache)라는 단어는 Redis에서만 쓰이는 용어는 아니고 전반적인 개발 분야에서 통용되어 사용된다.
 
 **[예시]**
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/e35a8144-c5ff-40f0-b123-384a331e35bb/c419d405-3666-4472-93ec-8134a481e6d3/Untitled.png)
+```mermaid
+graph TD
+    User((사용자))
+    subgraph "웹 브라우저 (Chrome, Safari 등)"
+        Browser[로컬 캐시: 방문한 사이트 데이터]
+    end
+    subgraph "웹 서버"
+        Server[Redis 캐시: 조회 결과 데이터]
+    end
+    DB[(DB: 원본 데이터)]
+
+    User --> Browser
+    Browser -- "데이터 없을 시" --> Server
+    Server -- "데이터 없을 시" --> DB
+```
 
 ### ✅ 캐싱(Caching)이란?
 

@@ -21,7 +21,16 @@ Redis는 단순히 속도만 빠른 것이 아니라, 다음과 같은 특징을
 2.  **영속성(Persistence) 제공**: 인메모리 데이터베이스이지만 데이터를 디스크에 저장할 수 있는 기능(RDB, AOF)을 제공한다. 덕분에 서버가 재시작되어도 데이터를 복구할 수 있다.
 3.  **싱글 스레드 기반의 단순함**: 한 번에 하나의 명령만 처리하므로 Race Condition(경쟁 상태)을 피하기 쉽고, 원자적(Atomic) 연산을 보장한다.
 
-![출처 : https://redis.io/nosql/key-value-databases/](https://prod-files-secure.s3.us-west-2.amazonaws.com/e35a8144-c5ff-40f0-b123-384a331e35bb/58a8c4a7-4bd2-44d2-8c82-3d430c0aa6a1/Untitled.png)
+#### Key-Value 구조 (예시)
+
+```mermaid
+graph LR
+    subgraph "Redis (Memory)"
+        K1[Key: user:1:name] --> V1[Value: "jaeseong"]
+        K2[Key: user:1:age] --> V2[Value: 30]
+        K3[Key: user:1:hobby] --> V3[Value: "soccer"]
+    end
+```
 
 출처 : https://redis.io/nosql/key-value-databases/
 
